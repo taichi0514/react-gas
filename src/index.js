@@ -9,42 +9,30 @@ class View extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: [],link:[]
+            text: [], link: []
         };
     }
-
-    componentDidMount(){
-        const GasUrlId = "1dE27_quEBEbixmBxdDdIBB16kDAk9GE7wZyF99gaWgM";
+    componentDidMount() {
         const GasUrl =
-            "https://spreadsheets.google.com/feeds/list/" +
-            GasUrlId +
-            "/od6/public/values?alt=json";
-        return new Promise((resolve, reject) => {
-            axios
-                .get(GasUrl)
-                .then((response) => {
-                    const text = response.data.feed.entry;
-                    console.log(text);
-                    console.log(response);
-                    text.map(text => {
-                        console.log(text["gsx$title"]["$t"]);
-                        console.log(text["gsx$url"]["$t"]);
-                        this.setState ({text: text["gsx$title"]["$t"],link: text["gsx$url"]["$t"]});
-                    });
-                })
-                .catch(function (error) {
-                    // handle error
-                    console.log(error);
-                })
-        });
+            "https://script.googleusercontent.com/macros/echo?user_content_key=WNsv86zuxO_VjtLQFrxOCcrgNr4zDl93jCBhgjkHDCPilQ--mDuoSKYQDsPP-H-IMW5Dif3Zsxy-eogSJQzAZm-gXpWX9tRbm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnCXHOZDwPOVnRbjP-r8vfPMY8dEOvqG4coUZKysh_aLPfhH32UPe6nHZy99cXRLigiT5VXRW9UUX&lib=MbbX_mfiSGyZNI21emFKhAj1zIcEc1DfX"
+        axios
+            .get(GasUrl)
+            .then((response) => {
+                const text = response.data;
+                this.setState({text: text});
+
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
     }
 
     render() {
         return (
             <div>
-                <p>{this.state.text}</p>
                 <FormPost/>
-                <GasList text={[this.state.text]} link={this.state.link}/>
+                <GasList text={this.state.text} />
             </div>
         );
     }
@@ -52,5 +40,5 @@ class View extends React.Component {
 }
 
 
-ReactDOM.render(<View />, document.getElementById('root'));
+ReactDOM.render(<View/>, document.getElementById('root'));
 

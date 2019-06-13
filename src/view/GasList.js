@@ -1,19 +1,16 @@
 import React from 'react';
+import axios from "axios";
 
 class GasList extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            text: [],link:[]
-        };
-    }
-    render(){
-        return(
+    render() {
+        return (
             <ul>
-                <li><a href={this.props.link}>{this.props.text}</a></li>
+                {this.props.text.map((text,i)=><li key={i}><a href={text.Url}>{text.Title}</a></li>)}
+
             </ul>
-            )}
+        )
     }
+}
 
 
 export default GasList;
